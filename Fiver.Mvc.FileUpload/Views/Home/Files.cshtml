@@ -1,7 +1,5 @@
 ﻿@model Fiver.Mvc.FileUpload.Models.Home.FilesViewModel
-
 <p>List of Files</p>
-
 <p>download:</p>
 <ul>
     @foreach (var item in Model.Files)
@@ -14,7 +12,6 @@
         </li>
     }
 </ul>
-
 <p>view in new tab:</p>
 <ul>
     @foreach (var item in Model.Files)
@@ -26,3 +23,20 @@
         </li>
     }
 </ul>
+<p>
+    <a href="~/"> Goto file upload</a>
+</p>
+
+<p>view in place:</p>
+<ul>
+    @foreach (var item in Model.Images)
+    {
+    <li>
+        <img src="~/@item.Name" alt="@item.Name"
+             asp-append-version="true" />
+    </li>
+    }
+</ul>
+<p>
+    <a href="~/"> Goto file upload</a>
+</p>

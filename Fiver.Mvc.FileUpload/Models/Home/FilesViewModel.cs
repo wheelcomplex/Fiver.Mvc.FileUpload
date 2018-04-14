@@ -12,5 +12,8 @@ namespace Fiver.Mvc.FileUpload.Models.Home
     {
         public List<FileDetails> Files { get; set; } 
             = new List<FileDetails>();
+
+        public List<FileDetails> Images { get; set; }
+            = new List<FileDetails>();
     }
 }

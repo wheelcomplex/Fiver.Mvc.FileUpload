@@ -12,6 +12,29 @@ namespace Fiver.Mvc.FileUpload.Controllers
     {
         private readonly IFileProvider fileProvider;
 
+        private Dictionary<string, string> mimeTypes = new Dictionary<string, string>
+            {
+                {".txt", "text/plain"},
+                {".pdf", "application/pdf"},
+                {".doc", "application/vnd.ms-word"},
+                {".docx", "application/vnd.ms-word"},
+                {".xls", "application/vnd.ms-excel"},
+                {".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
+                {".png", "image/png"},
+                {".jpg", "image/jpeg"},
+                {".jpeg", "image/jpeg"},
+                {".gif", "image/gif"},
+                {".csv", "text/csv"}
+            };
+
+        private Dictionary<string, string> imageMimeTypes = new Dictionary<string, string>
+            {
+                {".png", "image/png"},
+                {".jpg", "image/jpeg"},
+                {".jpeg", "image/jpeg"},
+                {".gif", "image/gif"},
+            };
+
         public HomeController(IFileProvider fileProvider)
         {
             this.fileProvider = fileProvider;
@@ -87,6 +110,12 @@ namespace Fiver.Mvc.FileUpload.Controllers
             {
                 model.Files.Add(
                     new FileDetails { Name = item.Name, Path = item.PhysicalPath });
+
+                if (IsImageFile(item.PhysicalPath))
+                {
+                    model.Images.Add(
+                    new FileDetails { Name = item.Name, Path = item.PhysicalPath });
+                }
             }
             return View(model);
         }
@@ -111,27 +140,14 @@ namespace Fiver.Mvc.FileUpload.Controllers
 
         private string GetContentType(string path)
         {
-            var types = GetMimeTypes();
             var ext = Path.GetExtension(path).ToLowerInvariant();
-            return types[ext];
+            return mimeTypes[ext];
         }
 
-        private Dictionary<string, string> GetMimeTypes()
+        private bool IsImageFile(string filename)
         {
-            return new Dictionary<string, string>
-            {
-                {".txt", "text/plain"},
-                {".pdf", "application/pdf"},
-                {".doc", "application/vnd.ms-word"},
-                {".docx", "application/vnd.ms-word"},
-                {".xls", "application/vnd.ms-excel"},
-                {".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
-                {".png", "image/png"},
-                {".jpg", "image/jpeg"},
-                {".jpeg", "image/jpeg"},
-                {".gif", "image/gif"},
-                {".csv", "text/csv"}
-            };
+            var ext = Path.GetExtension(filename).ToLowerInvariant();
+            return imageMimeTypes.ContainsKey(ext);
         }
     }
 }
