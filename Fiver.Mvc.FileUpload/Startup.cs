@@ -23,6 +23,10 @@ namespace Fiver.Mvc.FileUpload
             IHostingEnvironment env)
         {
             app.UseDeveloperExceptionPage();
+
+            // send static file from wwwroot
+            app.UseStaticFiles();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

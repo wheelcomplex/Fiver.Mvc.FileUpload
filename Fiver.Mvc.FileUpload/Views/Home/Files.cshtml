@@ -2,12 +2,25 @@
 
 <p>List of Files</p>
 
+<p>download:</p>
 <ul>
     @foreach (var item in Model.Files)
     {
         <li>
             <a asp-action="Download"
                asp-route-filename="@item.Name">
+                @item.Name
+            </a>
+        </li>
+    }
+</ul>
+
+<p>view in new tab:</p>
+<ul>
+    @foreach (var item in Model.Files)
+    {
+        <li>
+            <a href="~/@item.Name" target="_blank">
                 @item.Name
             </a>
         </li>
